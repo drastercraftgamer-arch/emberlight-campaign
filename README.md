@@ -1,8 +1,8 @@
 # 🐉 Campaña de Emberlight (Sitio Web)
 
-![Emberlight Banner](https://img.shields.io/badge/Emberlight-Campaign-blue)
+![Emberlight Banner](https://img.shields.io/badge/Emberlight-Campaña-blue)
 ![D&D](https://img.shields.io/badge/Dungeons%20&%20Dragons-5e-red)
-![Status](https://img.shields.io/badge/Status-Active-success)
+![Status](https://img.shields.io/badge/Status-Activa-success)
 
 Sitio web oficial de la campaña de Dungeons & Dragons **"Emberlight: Crónicas del Amanecer"**.
 
@@ -42,4 +42,5 @@ Los nombres, lugares y elementos de D&D son propiedad de KiryBlade.
 ---
 
 *"Que la luz del Ember ilumine tu camino"* ✨
+
 
