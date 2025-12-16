@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emberlight Campaign</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- CABECERA -->
+        <header class="header">
+            <h1><i class="fas fa-fire"></i> EMBERLIGHT</h1>
+            <p class="subtitle">Crónicas del Amanecer</p>
+            <div class="header-decoration">
+                <span>✦</span>
+                <span>✧</span>
+                <span>✦</span>
+            </div>
+        </header>
+
+        <!-- MENÚ PRINCIPAL -->
+        <nav class="navbar">
+            <a href="#historia"><i class="fas fa-scroll"></i> Historia</a>
+            <a href="#lugares"><i class="fas fa-mountain"></i> Lugares</a>
+            <a href="#objetos"><i class="fas fa-gem"></i> Objetos</a>
+            <a href="#bestiario"><i class="fas fa-dragon"></i> Bestiario</a>
+        </nav>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="content">
+            <!-- HISTORIA -->
+            <section id="historia" class="section">
+                <h2><i class="fas fa-book-open"></i> Historia del Mundo</h2>
+                <div id="historia-content" class="cards-container">
+                    <!-- Se llena automáticamente desde JSON -->
+                    <div class="card">
+                        <h3><i class="fas fa-hourglass-start"></i> Cargando historia...</h3>
+                        <p>El contenido se cargará automáticamente desde tus notas de Obsidian.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LUGARES -->
+            <section id="lugares" class="section">
+                <h2><i class="fas fa-map-marked-alt"></i> Lugares & Mapas</h2>
+                <div id="lugares-content" class="cards-container">
+                    <div class="card">
+                        <h3><i class="fas fa-tree"></i> Brumasombría</h3>
+                        <p><strong>Tipo:</strong> Bosque encantado</p>
+                        <p><strong>Peligro:</strong> Medio</p>
+                        <p>Un bosque donde la luz de Emberlight se filtra tenue y los árboles susurran profecías olvidadas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OBJETOS -->
+            <section id="objetos" class="section">
+                <h2><i class="fas fa-ring"></i> Objetos Mágicos</h2>
+                <div id="objetos-content" class="cards-container">
+                    <div class="card">
+                        <h3><i class="fas fa-dagger"></i> Daga de la Chispa Latente</h3>
+                        <p><strong>Tipo:</strong> Arma (daga)</p>
+                        <p><strong>Rareza:</strong> Poco común</p>
+                        <p>La hoja tiene venas anaranjadas que pulsan con calor. Se calienta al acercarse a una fuente de Emberlight.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BESTIARIO -->
+            <section id="bestiario" class="section">
+                <h2><i class="fas fa-paw"></i> Bestiario</h2>
+                <div id="bestiario-content" class="cards-container">
+                    <div class="card">
+                        <h3><i class="fas fa-deer"></i> Fauno de la Bruma</h3>
+                        <p><strong>Tipo:</strong> Fey</p>
+                        <p><strong>PV:</strong> 22 (4d8+4)</p>
+                        <p><strong>CA:</strong> 13</p>
+                        <p>Guardianes caprichosos de Brumasombría. Pueden guiar con amabilidad o hacer que los intrusos se pierdan para siempre.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="footer">
+            <p><i class="fas fa-hat-wizard"></i> Emberlight Campaign</p>
+            <p>Una campaña de Dungeons & Dragons</p>
+            <div class="footer-info">
+                <p id="last-update">Última actualización: <span id="update-date">Cargando...</span></p>
+                <p class="copyright">© <span id="current-year"></span> - Todos los derechos reservados al Dungeon Master</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Fecha actual
+        document.getElementById('update-date').textContent =
+            new Date().toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+        // Año actual
+        document.getElementById('current-year').textContent =
+            new Date().getFullYear();
+
+        // Cargar datos dinámicos desde JSON
+        async function cargarDatos() {
+            try {
+                // Cargar historia
+                const respuestaHistoria = await fetch('data/historia.json');
+                const datosHistoria = await respuestaHistoria.json();
+                mostrarDatos('historia-content', datosHistoria.historia);
+
+                // Cargar lugares
+                const respuestaLugares = await fetch('data/lugares.json');
+                const datosLugares = await respuestaLugares.json();
+                mostrarDatos('lugares-content', datosLugares.lugares);
+
+                // Cargar objetos
+                const respuestaObjetos = await fetch('data/objetos.json');
+                const datosObjetos = await respuestaObjetos.json();
+                mostrarDatos('objetos-content', datosObjetos.objetos);
+
+                // Cargar bestiario
+                const respuestaBestiario = await fetch('data/bestiario.json');
+                const datosBestiario = await respuestaBestiario.json();
+                mostrarDatos('bestiario-content', datosBestiario.bestiario);
+
+            } catch (error) {
+                console.log('Los datos se cargarán cuando ejecutes el generador.');
+            }
+        }
+
+        function mostrarDatos(contenedorId, datos) {
+            const contenedor = document.getElementById(contenedorId);
+            if (!datos || datos.length === 0) return;
+
+            contenedor.innerHTML = '';
+
+            datos.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Icono según categoría
+                let icono = '📄';
+                if (contenedorId.includes('historia')) icono = '📜';
+                else if (contenedorId.includes('lugares')) icono = '🗺️';
+                else if (contenedorId.includes('objetos')) icono = '💎';
+                else if (contenedorId.includes('bestiario')) icono = '🐉';
+
+                card.innerHTML = `
+                    <h3>${icono} ${item.titulo || 'Sin título'}</h3>
+                    <p>${item.descripcion || 'Sin descripción'}</p>
+                    ${item.archivo ? `<small><i>Fuente: ${item.archivo}</i></small>` : ''}
+                `;
+
+                contenedor.appendChild(card);
+            });
+        }
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', cargarDatos);
+    </script>
+</body>
+</html>
